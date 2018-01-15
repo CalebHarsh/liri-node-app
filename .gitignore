@@ -34,7 +34,10 @@ build/Release
 
 # Dependency directories
 node_modules/
+.DS_Store/
 jspm_packages/
+keys.js
+spotKeys.j
 
 # Typescript v1 declaration files
 typings/
