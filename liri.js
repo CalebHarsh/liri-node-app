@@ -1,8 +1,10 @@
+//node install functions
 var fs = require("fs")
 var client = require("./keys.js")
 var spotify = require("./spotKeys.js")
 var request = require("request")
 
+//Twitter Api Function
 var runTwitter = function () {
   var parmas = { screen_name: "jackcarmichae17", count: 20 }
   client.get('statuses/user_timeline', parmas, (err, tweets, res) => {
@@ -21,6 +23,7 @@ var runTwitter = function () {
   })
 }
 
+//Spotify Api function
 var runSpotify = function (search) {
   if (!search) { search = "The Sign" }
   spotify.search({ type: 'track', query: 'track:"' + search + '"', limit: 5 }, (err, data) => {
@@ -39,6 +42,7 @@ var runSpotify = function (search) {
   })
 }
 
+//omdb rquest data 
 var runMovie = function (movie) {
   if (!movie) { movie = "Mr. Nobody" }
 
@@ -65,6 +69,7 @@ var runMovie = function (movie) {
 
 }
 
+//running a pre-set command from another file
 var randomCommand = function () {
   fs.readFile("random.txt", (err, data) => {
     if (err) { return console.log(err) }
@@ -75,6 +80,7 @@ var randomCommand = function () {
   })
 }
 
+//re-routing data 
 var switchCase = function (command, value) {
   console.log("");
   switch (command) {
@@ -101,6 +107,7 @@ var switchCase = function (command, value) {
 
 }
 
+//logging data and commands 
 var logCommand = function (command, info) {
   if (!info) { info = "" } else { info = "," + info }
   fs.appendFile("log.txt", command + info + "\n\n", function (err) {
@@ -108,9 +115,11 @@ var logCommand = function (command, info) {
   })
 }
 
+//getting all the infomation
 var search = process.argv[3]
 for (var i = 4; i < process.argv.length; i++) {
   search += " " + process.argv[i]
 }
 
+//run command
 switchCase(process.argv[2], search)
