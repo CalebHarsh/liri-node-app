@@ -1,20 +1,19 @@
 //node install functions
 var fs = require("fs")
 var client = require("./keys.js")
-var spotify = require("./spotKeys.js")
 var request = require("request")
 
 //Twitter Api Function
 var runTwitter = function () {
   var parmas = { screen_name: "jackcarmichae17", count: 20 }
-  client.get('statuses/user_timeline', parmas, (err, tweets, res) => {
+  client.twitterKeys.get('statuses/user_timeline', parmas, (err, tweets, res) => {
     
     logCommand("my-tweets")
     if (!err) {
       tweets.forEach(twet => {
         var input = "User: " + twet.user.name + "\nMessage: " + twet.text +
           "\n  -" + twet.user.screen_name + "\nCreated on " + twet.created_at.slice(0, 16)
-        input += "================================="
+        input += "\n================================="
         console.log(input)
         logCommand(input)
       })
@@ -26,7 +25,7 @@ var runTwitter = function () {
 //Spotify Api function
 var runSpotify = function (search) {
   if (!search) { search = "The Sign" }
-  spotify.search({ type: 'track', query: 'track:"' + search + '"', limit: 5 }, (err, data) => {
+  client.spotData.search({ type: 'track', query: 'track:"' + search + '"', limit: 5 }, (err, data) => {
     if (err) {
       return console.log("Error occured: " + err)
     }
