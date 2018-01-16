@@ -2,11 +2,19 @@
 var fs = require("fs")
 var client = require("./keys.js")
 var request = require("request")
+var Twitter = require('twitter');
+var Spotify = require("node-spotify-api")
+
+//get Twitter Data
+var twitterData = new Twitter(client.twitterKeys)
+
+//get Spotify Data
+var spotifyData = new Spotify(client.spotData)
 
 //Twitter Api Function
 var runTwitter = function () {
   var parmas = { screen_name: "jackcarmichae17", count: 20 }
-  client.twitterKeys.get('statuses/user_timeline', parmas, (err, tweets, res) => {
+  twitterData.get('statuses/user_timeline', parmas, (err, tweets, res) => {
     
     logCommand("my-tweets")
     if (!err) {
@@ -25,7 +33,7 @@ var runTwitter = function () {
 //Spotify Api function
 var runSpotify = function (search) {
   if (!search) { search = "The Sign" }
-  client.spotData.search({ type: 'track', query: 'track:"' + search + '"', limit: 5 }, (err, data) => {
+  spotifyData.search({ type: 'track', query: 'track:"' + search + '"', limit: 5 }, (err, data) => {
     if (err) {
       return console.log("Error occured: " + err)
     }
